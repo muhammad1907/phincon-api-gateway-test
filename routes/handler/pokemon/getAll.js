@@ -1,0 +1,21 @@
+const apiAdapter = require('../../apiAdapter');
+const {
+  URL_SERVICE_POKEMON
+} = process.env;
+
+const api = apiAdapter(URL_SERVICE_POKEMON);
+
+module.exports = async (req, res) => {
+  try {
+    const pokemon = await api.get('/pokemon');
+    return res.json(pokemon.data);
+  } catch (error) {
+
+    if (error.code === 'ECONNREFUSED') {
+      return res.status(500).json({ status: 'error', message: 'service unavailable' });
+    }
+
+    const { status, data } = error.response;
+    return res.status(status).json(data);
+  }
+}
