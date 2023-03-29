@@ -8,7 +8,7 @@ const api = apiAdapter(URL_SERVICE_POKEMON);
 module.exports = async (req, res) => {
   try {
     const id = req.params.id;
-    const pokemon = await api.get(`/release/${id}`);
+    const pokemon = await api.put(`/pokemon/rename-pokemon/${id}`);
     return res.json(pokemon.data);
   } catch (error) {
 
@@ -20,3 +20,4 @@ module.exports = async (req, res) => {
     return res.status(status).json(data);
   }
 }
+
